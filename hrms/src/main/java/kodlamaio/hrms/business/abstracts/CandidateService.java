@@ -13,5 +13,6 @@ public interface CandidateService{
     DataResult<Candidate> getByNationalIdentity(String nationalIdentity);
 	DataResult<Candidate> get(int id);
 	Result add(Candidate candidate);
+	Result delete(Candidate canidate);
 
 }

@@ -39,4 +39,11 @@ public class EmployerManager implements EmployerService{
 		return new SuccessResult("İşveren Eklendi");
 	}
 
+	@Override
+	public Result delete(Employer employer) {
+		this.employerDao.delete(employer);
+		return new SuccessResult();
+	}
+	
+   
 }

@@ -7,8 +7,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class VerificationManager implements VerificationService{
 	
-	  
-
 	@Override
 	public void sendVerificationCode(String email) {
 		UUID uuid = UUID.randomUUID();

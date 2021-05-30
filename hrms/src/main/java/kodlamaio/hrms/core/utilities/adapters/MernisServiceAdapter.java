@@ -19,7 +19,7 @@ public class MernisServiceAdapter implements MernisCheckService{
 	@Override
 	public Result checkIfRealPerson(Candidate candidate) {
 		
-		if(checkNationalId(candidate.getNationalIdentity()).isSuccess() 
+		if(checkNationalIdentity(candidate.getNationalIdentity()).isSuccess() 
 				&& checkFirstName(candidate.getFirstName()).isSuccess()
 				&& checkLastName(candidate.getLastName()).isSuccess()
 				&& checkDateOfBirth(candidate.getDateOfBirth()).isSuccess()) {
@@ -30,7 +30,7 @@ public class MernisServiceAdapter implements MernisCheckService{
 		return new ErrorResult();
 	}
 	
-	private Result checkNationalId(String nationalId){
+	private Result checkNationalIdentity(String nationalId){
 
         if(nationalId == null){
             return new ErrorResult("Tc No Boş bırakılmamalıdır. ");

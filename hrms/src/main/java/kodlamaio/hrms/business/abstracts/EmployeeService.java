@@ -11,4 +11,5 @@ public interface EmployeeService {
 	 DataResult<List<Employee>> getAll();
 	 DataResult<Employee> get(int id);
 	 Result add(Employee employee);
+	 Result delete(Employee employee);
 }

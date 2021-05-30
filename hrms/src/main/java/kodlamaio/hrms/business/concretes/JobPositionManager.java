@@ -43,5 +43,18 @@ public class JobPositionManager implements JobPositionService{
 		return new SuccessDataResult<JobPosition>(this.jobPositionDao.findByPosition(position));
 	}
 
+
+	@Override
+	public DataResult<JobPosition> getByid(int id) {
+		return new SuccessDataResult<JobPosition>(this.jobPositionDao.findById(id).get());
+	}
+
+
+	@Override
+	public Result delete(JobPosition jobPosition) {
+		this.jobPositionDao.delete(jobPosition);
+		return new SuccessResult();
+	}
+
 	
 }

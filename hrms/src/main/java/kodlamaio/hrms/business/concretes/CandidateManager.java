@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.CandidateService;
+import kodlamaio.hrms.core.utilities.adapters.MernisServiceAdapter;
 import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.core.utilities.results.ErrorResult;
 import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
@@ -17,11 +19,13 @@ import kodlamaio.hrms.entities.concretes.Candidate;
 public class CandidateManager implements CandidateService {
 	
 	private CandidateDao candidateDao;
+	private MernisServiceAdapter mernisServiceAdapter;
 
 	@Autowired
-	public CandidateManager(CandidateDao candidateDao) {
+	public CandidateManager(CandidateDao candidateDao, MernisServiceAdapter mernisServiceAdapter) {
 		super();
 		this.candidateDao = candidateDao;
+		this.mernisServiceAdapter = mernisServiceAdapter;
 	}
 
 	@Override
@@ -36,8 +40,12 @@ public class CandidateManager implements CandidateService {
 
 	@Override
 	public Result add(Candidate candidate) {
-		this.candidateDao.save(candidate);
-		return new SuccessResult("İş Adayı Eklendi");
+		if(checkUserNationalIdentity(candidate).isSuccess() 
+				&& mernisServiceAdapter.checkIfRealPerson(candidate).isSuccess()) {
+			this.candidateDao.save(candidate);
+			return new SuccessResult("İş Adayı Eklendi");
+		}
+		return new ErrorResult();
 	}
 
 	@Override
@@ -45,6 +53,20 @@ public class CandidateManager implements CandidateService {
 		return new SuccessDataResult<Candidate>(candidateDao.findByNationalIdentity(nationalIdentity));
 	}
 
+	@Override
+	public Result delete(Candidate canidate) {
+		candidateDao.delete(canidate);
+        return new SuccessResult("Aday Silindi.");
+	}
+
+
+	private Result checkUserNationalIdentity(Candidate candidate) {
+		
+		if(getByNationalIdentity(candidate.getNationalIdentity()).getData()!=null){
+			new ErrorResult("Başka bir adres yazınız.");
+		}
+		return new SuccessResult();
+	}
 	
 
 }
