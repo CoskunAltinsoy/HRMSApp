@@ -18,8 +18,8 @@ import lombok.NoArgsConstructor;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name="candidates")
 @PrimaryKeyJoinColumn(name="id")
+@Table(name="candidates")
 
 public class Candidate extends User {
 	
