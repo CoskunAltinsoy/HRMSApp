@@ -70,7 +70,8 @@ public class EmployerManager implements EmployerService{
 	    		
 			 return new ErrorResult("Boş alan bırakılmamalıdır.");     		
 	    	}
-		 if(!checkDomain(employer).isSuccess()) {
+		 if(!checkDomain(employer).isSuccess()
+				 ) {
 			 return new ErrorResult("Emailiniz web adresi ile uyuşmuyor.");  		 
 		 }
 	    	return new SuccessResult(); 
