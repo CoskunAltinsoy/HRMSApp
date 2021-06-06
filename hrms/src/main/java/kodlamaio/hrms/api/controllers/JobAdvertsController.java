@@ -16,12 +16,12 @@ import kodlamaio.hrms.entities.concretes.JobAdvert;
 
 @RestController
 @RequestMapping("/api/jobadverts/")
-public class JobAdvertController {
+public class JobAdvertsController {
 	
 	private JobAdvertService jobadvertService;
 
 	@Autowired
-	public JobAdvertController(JobAdvertService jobadvertService) {
+	public JobAdvertsController(JobAdvertService jobadvertService) {
 		super();
 		this.jobadvertService = jobadvertService;
 	}
