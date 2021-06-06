@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -14,7 +15,7 @@ import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.entities.concretes.JobAdvert;
 
 @RestController
-@RequestMapping("/api/jobadverts")
+@RequestMapping("/api/jobadverts/")
 public class JobAdvertController {
 	
 	private JobAdvertService jobadvertService;
@@ -30,7 +31,7 @@ public class JobAdvertController {
 		return this.jobadvertService.getAll();
 		}
 	
-	@GetMapping("add")
+	@PostMapping("add")
 	public void add(@RequestBody JobAdvert jobAdvert){
 		this.jobadvertService.add(jobAdvert);
 		}

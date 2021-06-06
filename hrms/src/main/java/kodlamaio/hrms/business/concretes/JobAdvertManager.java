@@ -26,8 +26,7 @@ public class JobAdvertManager implements JobAdvertService{
 
 	@Override
 	public DataResult<List<JobAdvert>> getAll() {
-		return new SuccessDataResult<List<JobAdvert>>(this.jobAdvertDao.findAll());
-		
+		return new SuccessDataResult<List<JobAdvert>>(this.jobAdvertDao.findAll());	
 	}
 
 	@Override

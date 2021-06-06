@@ -14,7 +14,7 @@ import kodlamaio.hrms.core.utilities.results.DataResult;
 import kodlamaio.hrms.entities.concretes.Employee;
 
 @RestController
-@RequestMapping("/api/employees")
+@RequestMapping("/api/employees/")
 public class EmployeesController {
 
     private EmployeeService employeeService;
@@ -31,12 +31,10 @@ public class EmployeesController {
         return employeeService.getAll();
     }
 
-
     @GetMapping("get")
     public DataResult<Employee> get(int id){
         return employeeService.get(id);
     }
-
 
     @PostMapping("add")
     public void add(@RequestBody Employee systemPersonnel){
