@@ -11,8 +11,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -22,7 +20,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name ="job_adverts")
-@JsonIgnoreProperties("hibernateLazyInitializer\",\"handler\",\"products")
 public class JobAdvert {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -59,16 +56,20 @@ public class JobAdvert {
 	//@Column(name = "city_id")
     //private int cityId;
 	
+	
 	@ManyToOne()
 	@JoinColumn(name = "city_id")
 	private City city;
+	
 	
 	@ManyToOne()
 	@JoinColumn(name = "employer_id")
 	private Employer employer;
 	
+	
 	@ManyToOne()
 	@JoinColumn(name = "job_position_id")
 	private JobPosition jobPosition;
+	
 
 }

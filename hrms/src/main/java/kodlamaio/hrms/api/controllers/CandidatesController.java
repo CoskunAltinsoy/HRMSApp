@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import kodlamaio.hrms.business.abstracts.CandidateService;
 import kodlamaio.hrms.core.utilities.results.DataResult;
+import kodlamaio.hrms.entities.Dtos.CurriculumVitaeDto;
 import kodlamaio.hrms.entities.concretes.Candidate;
 
 @RestController
@@ -34,10 +35,17 @@ public class CandidatesController {
     public DataResult<Candidate> get(int id){
         return this.candidateService.get(id);
     }
+    
+    @GetMapping("getCandidateCvById")
+    public DataResult<CurriculumVitaeDto> getCandidateCvById(int candidateId){
+        return this.candidateService.getCandidateCvById(candidateId);
+    }
 
     @PostMapping("add")
     public void add(@RequestBody Candidate candidate){
         candidateService.add(candidate);
     }
+    
+    
 
 }

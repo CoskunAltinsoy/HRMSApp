@@ -6,6 +6,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import kodlamaio.hrms.business.abstracts.CandidateService;
+import kodlamaio.hrms.business.abstracts.CurriculumVitaeService;
+import kodlamaio.hrms.business.abstracts.EducationService;
+import kodlamaio.hrms.business.abstracts.ImageService;
+import kodlamaio.hrms.business.abstracts.JobExperianceService;
+import kodlamaio.hrms.business.abstracts.LanguageService;
+import kodlamaio.hrms.business.abstracts.SkillService;
 import kodlamaio.hrms.business.abstracts.VerificationCodeService;
 import kodlamaio.hrms.core.utilities.Verification.VerificationService;
 import kodlamaio.hrms.core.utilities.adapters.MernisServiceAdapter;
@@ -15,8 +21,10 @@ import kodlamaio.hrms.core.utilities.results.Result;
 import kodlamaio.hrms.core.utilities.results.SuccessDataResult;
 import kodlamaio.hrms.core.utilities.results.SuccessResult;
 import kodlamaio.hrms.dataAccess.abstracts.CandidateDao;
+import kodlamaio.hrms.entities.Dtos.CurriculumVitaeDto;
 import kodlamaio.hrms.entities.concretes.Candidate;
 import kodlamaio.hrms.entities.concretes.VerificationCode;
+
 
 @Service
 public class CandidateManager implements CandidateService {
@@ -25,15 +33,30 @@ public class CandidateManager implements CandidateService {
 	private MernisServiceAdapter mernisServiceAdapter;
 	private VerificationService verificationService;
 	private VerificationCodeService verificationCodeService;
+	private CurriculumVitaeService curriculumVitaeService;
+	private EducationService educationService;
+	private JobExperianceService jobExperianceService;
+	private LanguageService languageService;
+	private SkillService skillService;
+	private ImageService imageService;
 
 	@Autowired
 	public CandidateManager(CandidateDao candidateDao, MernisServiceAdapter mernisServiceAdapter,
-			VerificationService verificationService, VerificationCodeService verificationCodeService) {
+			VerificationService verificationService, VerificationCodeService verificationCodeService,
+			CurriculumVitaeService curriculumVitaeService, EducationService educationService,
+			JobExperianceService jobExperianceService, LanguageService languageService,
+			SkillService skillService, ImageService imageService) {
 		super();
 		this.candidateDao = candidateDao;
 		this.mernisServiceAdapter = mernisServiceAdapter;
 		this.verificationService = verificationService;
 		this.verificationCodeService = verificationCodeService;
+		this.curriculumVitaeService = curriculumVitaeService;
+		this.educationService = educationService;
+		this.jobExperianceService = jobExperianceService;
+		this.languageService = languageService;
+		this.skillService = skillService;
+		this.imageService = imageService;
 	}
 
 	@Override
@@ -69,6 +92,12 @@ public class CandidateManager implements CandidateService {
 	public DataResult<Candidate> getByNationalIdentity(String nationalIdentity) {	
 		return new SuccessDataResult<Candidate>(candidateDao.findByNationalIdentity(nationalIdentity));
 	}
+	
+	@Override
+	public DataResult<Candidate> getById(int id) {
+		return new SuccessDataResult<Candidate>(this.candidateDao.findById(id));
+	}
+
 
 	@Override
 	public Result delete(Candidate canidate) {
@@ -105,6 +134,19 @@ public class CandidateManager implements CandidateService {
 		this.verificationCodeService.add(new VerificationCode(candidate.getId(), verification, true));
 		return new SuccessResult();		
 	}
+
+	@Override
+	public DataResult<CurriculumVitaeDto> getCandidateCvById(int candidateId) {
+		CurriculumVitaeDto curriculumVitaeDto = new CurriculumVitaeDto();
+		curriculumVitaeDto.setCurriculumVitae(this.curriculumVitaeService.getByCandidateId(candidateId).getData());
+		curriculumVitaeDto.setEducations(this.educationService.getByCandidateId(candidateId).getData());
+		curriculumVitaeDto.setImage(this.imageService.getByCandidateId(candidateId).getData());
+		curriculumVitaeDto.setJobExperiances(this.jobExperianceService.getByCandidateId(candidateId).getData());
+		curriculumVitaeDto.setLanguages(this.languageService.getByCandidateId(candidateId).getData());
+		curriculumVitaeDto.setSkills(this.skillService.getByCandidateId(candidateId).getData());
+		return new SuccessDataResult<CurriculumVitaeDto>(curriculumVitaeDto);
+	}
+
 	
 
 }
